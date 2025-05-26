@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head><title>Home</title></head>
+<style>
+        p{
+            color: #ffffff;
+        }
+        a{
+            color: #007bee;
+            text-decoration: underline;
+        }
+        body {
+            background-color: #424242;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color:#ffffff;
+            padding: 50px;
+        }
+        h1 {
+            color: #ffffff;
+        }
+        label {
+            color:#ffffff;
+            margin-top: 10px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 200px;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3b863f;
+        }
+</style>
+<body>
+  <h2>Welcome, {{ username }}!</h2>
+  <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
