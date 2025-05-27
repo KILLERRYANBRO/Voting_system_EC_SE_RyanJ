@@ -42,7 +42,42 @@
         input[type="submit"]:hover {
             background-color: #3b863f;
         }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+         display: block;
+         color: white;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+         background-color: #111;
+        }
+
+        .active {
+            background-color: #74044e;
+        }
 </style>
+<ul>
+  <li><a class="active" href="{{ url_for('home') }}">Home</a></li>
+  <li><a href="candidates.html">Candidates</a></li>
+  <li><a href="{{ url_for('votepage') }}">Vote Now</a></li>
+</ul>
 <body>
   <h2>Welcome, {{ username }}!</h2>
   <a href="{{ url_for('logout') }}">Logout</a>

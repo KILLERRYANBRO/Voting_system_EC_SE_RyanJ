@@ -62,11 +62,16 @@ def home():
         return render_template('home.html', username=session['username'])
     return redirect(url_for('login'))
 
+@app.route('/vote')
+def votepage():
+    return render_template('vote.html')
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     flash('Logged out successfully.')
     return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     init_db()
