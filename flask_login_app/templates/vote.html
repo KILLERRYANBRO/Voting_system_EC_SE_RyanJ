@@ -14,11 +14,11 @@
             text-decoration: underline;
         }
         body {
-            background-color: #424242;
-            font-family: Arial, sans-serif;
+            background-color: #3d3d3d;
+            font-family: Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             color:#ffffff;
-            padding: 50px;
+            padding-top: 50px;
         }
         h1 {
             color: #ffffff;
@@ -60,6 +60,74 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
+        nav {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+        button {
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #80004d;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            align-self: center;
+            font-size: 1rem;
+        }
+        button:hover {
+            background-color: #a0005f;
+        }
+        select {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+        }
+        .vote-section{
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+            width:100%;  
+            min-width: 0;        
+        }
+        .vote-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2rem;
+            background: #2b2b2b;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        .submit-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: #80004d;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .vote-columns {
+            display: flex;
+            gap: 3rem;
+            width: 100%;
+            justify-content: center;
+            min-width: 0;
+        }
     </style>
     <ul>
         <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -67,41 +135,55 @@
         <li><a class="active" href="{{ url_for('votepage') }}">Vote Now</a></li>
     </ul>
     <h1>Prefect Voting System</h1>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Boy Vote 1</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select><br>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Boy Vote 2</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select><br>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Boy Vote 3</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select><br>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Girl Vote 1</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select><br>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Girl Vote 2</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select><br>
-    <select class="form-select" aria-label="Default select example">
-        <option selected>Girl Vote 3</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-    </select><br>
+    <body class="container">
+        <form class="vote-form">
+            <div class="vote-columns">
+                <div class="vote-section">
+                    <h2>Boys</h2>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Boy Vote 1</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Boy Vote 2</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Boy Vote 3</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                </div>
 
+                <div class="vote-section">
+                    <h2>Girls</h2>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Girl Vote 1</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Girl Vote 2</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Girl Vote 3</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                </div>
+                <br>
+            </div>
+            <button type="submit" class="submit-btn" value="Vote">Submit Vote</button>
+        </form>
+    </body>
 </html>
