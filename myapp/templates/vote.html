@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+        <title>
+            Prefect Voting
+        </title>
+    </head>
+    <ul class="navbar">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="candidates.html">Candidates</a></li>
+        <li><a class="active" href="{{ url_for('votepage') }}">Vote Now</a></li>
+    </ul>
+    <h1>Prefect Voting System</h1>
+    <body class="container">
+        <form class="vote-form">
+            <div class="vote-columns">
+                <div class="vote-section">
+                    <h2>Boys</h2>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Boy Vote 1</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Boy Vote 2</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Boy Vote 3</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                </div>
+                <div class="vote-section">
+                    <h2>Girls</h2>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Girl Vote 1</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Girl Vote 2</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Girl Vote 3</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select><br>
+                </div>
+                <br>
+            </div>
+            <input type="submit" value="Vote">
+        </form>
+    </body>
+</html>

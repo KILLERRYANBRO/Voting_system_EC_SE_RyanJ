@@ -1,0 +1,121 @@
+p{
+    color: #ffffff;
+}
+a{
+    color: #007bee;
+    text-decoration: underline;
+}
+body {
+    background-color: #3d3d3d;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color:#ffffff;
+    padding-top: 50px;
+}
+h1 {
+    color: #ffffff;
+}
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+ul{
+    text-align: center;
+}
+li {
+    list-style-type: none;
+}
+
+li a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    float: left;
+    background-color: #111;
+}
+
+.active {
+    background-color: #74044e;
+}
+select{
+    width:200px;
+    padding:10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+nav {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+label {
+    color:#ffffff;
+    margin-top: 10px;
+}
+input[type="text"],
+input[type="password"] {
+    width: 200px;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+input[type="submit"] {
+    background-color: #80004d;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background-color: #a0005f;
+}
+.vote-section{
+    display: flex;
+    flex: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    width:100%;  
+    min-width: 0;        
+}
+.vote-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    background: #2b2b2b;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    border-radius: 32px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.container {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    padding: 32px;
+}
+.vote-columns {
+    display: flex;
+    gap: 48px;
+    width: 100%;
+    justify-content: center;
+    min-width: 0;
+}
