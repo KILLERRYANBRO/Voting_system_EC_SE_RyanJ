@@ -1,20 +1,29 @@
-p{
+/* Global reset for consistency */
+* {
+    box-sizing: border-box;
+}
+
+p {
     color: #ffffff;
 }
-a{
+
+a {
     color: #007bee;
     text-decoration: underline;
 }
+
 body {
     background-color: #3d3d3d;
     font-family: Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
-    color:#ffffff;
+    color: #ffffff;
     padding-top: 50px;
 }
+
 h1 {
     color: #ffffff;
 }
+
 .navbar {
     list-style-type: none;
     margin: 0;
@@ -25,9 +34,11 @@ h1 {
     top: 0;
     width: 100%;
 }
-ul{
+
+ul {
     text-align: center;
 }
+
 li {
     list-style-type: none;
 }
@@ -49,23 +60,27 @@ li a:hover:not(.active) {
 .active {
     background-color: #74044e;
 }
-select{
-    width:200px;
-    padding:10px;
+
+select {
+    width: 200px;
+    padding: 10px;
     margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 16px;
 }
+
 nav {
     display: block;
     margin: 0;
     padding: 0;
 }
+
 label {
-    color:#ffffff;
+    color: #ffffff;
     margin-top: 10px;
 }
+
 input[type="text"],
 input[type="password"] {
     width: 200px;
@@ -74,6 +89,7 @@ input[type="password"] {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
 input[type="submit"] {
     background-color: #80004d;
     color: white;
@@ -82,40 +98,44 @@ input[type="submit"] {
     border: none;
     cursor: pointer;
 }
+
 input[type="submit"]:hover {
     background-color: #a0005f;
 }
-.vote-section{
-    display: flex;
-    flex: 16px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-    width:100%;  
-    min-width: 0;        
-}
+
 .vote-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 2rem;
+    gap: 32px; /* 2rem converted to 32px */
     background: #2b2b2b;
-    padding: 2rem;
+    padding: 32px; /* 2rem converted to 32px */
     max-width: 600px;
-    margin: 2rem auto;
+    margin: 32px auto; /* 2rem auto converted to 32px auto */
     border-radius: 32px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
-.container {
-    display: flex;
-    flex-direction:column;
-    align-items: center;
-    padding: 32px;
-}
+
 .vote-columns {
     display: flex;
     gap: 48px;
     width: 100%;
     justify-content: center;
     min-width: 0;
+}
+
+.vote-section {
+    display: flex;
+    flex: 1;   /* This ensures equal distribution instead of flex: 16px and width: 100% */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    min-width: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px;
 }

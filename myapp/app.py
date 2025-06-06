@@ -1,13 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-import sqlite3
-from pathlib import Path
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
+from sqlalchemy.exc import IntegrityError
 from .extensions import db, login_manager
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-DB_PATH = Path('users.db')
+login_manager.login_view = 'login'
 
 def init_routes(app):
     from .models import User
@@ -17,21 +16,9 @@ def init_routes(app):
         # Flask-Login uses this to reload user from session
         return User.query.get(int(user_id))
 
-    def init_db():
-        if not DB_PATH.exists():
-            with sqlite3.connect(DB_PATH) as conn:
-                conn.execute('''
-                    CREATE TABLE users (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        username TEXT UNIQUE NOT NULL,
-                        password TEXT NOT NULL,
-                        email TEXT UNIQUE NOT NULL
-                    )
-                ''')
-
     @app.route('/')
     def index():
-        if 'username' in session:
+        if current_user.is_authenticated:
             return redirect(url_for('home'))
         return redirect(url_for('login'))
 
@@ -40,15 +27,16 @@ def init_routes(app):
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
-            with sqlite3.connect(DB_PATH) as conn:
-                cursor = conn.cursor()
-                cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
-                user = cursor.fetchone()
-            if user:
-                session['username'] = username
+
+            # Query the database for the user
+            user = User.query.filter_by(username=username).first()
+
+            if user and user.check_password(password):
+                login_user(user)  # Logs in the user using Flask-Login
                 return redirect(url_for('home'))
             else:
                 flash('Login failed. Check your username and password.')
+
         return render_template('login.html')
 
     @app.route('/register', methods=['GET', 'POST'])
@@ -57,21 +45,24 @@ def init_routes(app):
             username = request.form['username']
             password = request.form['password']
             email = request.form['email']
+
+            new_user = User(username=username, email=email)
+            new_user.set_password(password)
+
             try:
-                with sqlite3.connect(DB_PATH) as conn:
-                    conn.execute("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", (username, password, email))
+                db.session.add(new_user)
+                db.session.commit()
                 flash('Registered successfully! You can now log in.')
                 return redirect(url_for('login'))
-            except sqlite3.IntegrityError:
-                flash('Username already exists.')
+            except IntegrityError:
+                flash('Username or email already exists.')
         return render_template('register.html')
 
     @app.route('/home')
     @login_required
     def home():
-        if 'username' in session:
-            return render_template('home.html', username=session['username'])
-        return redirect(url_for('login'))
+        return render_template('home.html', username=current_user.username)
+        
 
     @app.route('/vote')
     @login_required
@@ -81,6 +72,6 @@ def init_routes(app):
     @app.route('/logout')
     @login_required
     def logout():
-        session.pop('username', None)
+        logout_user()
         flash('Logged out successfully.')
         return redirect(url_for('login'))
