@@ -97,6 +97,7 @@ input[type="submit"] {
     border-radius: 5px;
     border: none;
     cursor: pointer;
+    font-size: large;
 }
 
 input[type="submit"]:hover {
@@ -129,7 +130,7 @@ input[type="submit"]:hover {
     flex: 1;   /* This ensures equal distribution instead of flex: 16px and width: 100% */
     flex-direction: column;
     align-items: stretch;
-    gap: 16px;
+    gap: 48px;
     min-width: 0;
 }
 
@@ -138,4 +139,39 @@ input[type="submit"]:hover {
     flex-direction: column;
     align-items: center;
     padding: 32px;
+}
+.flash-messages {
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.flash {
+  background-color: #ffefc4;
+  color: #333;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-left: 6px solid #ffc107;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.flash.success {
+  background-color: #d4edda;
+  border-left-color: #28a745;
+  color: #155724;
+}
+
+.flash.error {
+  background-color: #f8d7da;
+  border-left-color: #dc3545;
+  color: #721c24;
+}
+
+.flash.info {
+    background-color: #d1ecf1;
+    border-left: 6px solid #17a2b8;
+    color: #0c5460;
 }

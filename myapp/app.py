@@ -35,7 +35,7 @@ def init_routes(app):
                 login_user(user)  # Logs in the user using Flask-Login
                 return redirect(url_for('home'))
             else:
-                flash('Login failed. Check your username and password.')
+                flash('Login failed. Check your username and password.', 'error')
 
         return render_template('login.html')
 
@@ -52,10 +52,10 @@ def init_routes(app):
             try:
                 db.session.add(new_user)
                 db.session.commit()
-                flash('Registered successfully! You can now log in.')
+                flash('Registered successfully! You can now log in.', 'success')
                 return redirect(url_for('login'))
             except IntegrityError:
-                flash('Username or email already exists.')
+                flash('Username or email already exists.', 'error')
         return render_template('register.html')
 
     @app.route('/home')
@@ -68,10 +68,45 @@ def init_routes(app):
     @login_required
     def votepage():
         return render_template('vote.html')
+    
+    from .models import Vote
+
+    @app.route('/submit_vote', methods=['POST'])
+    @login_required
+    def submit_vote():
+        if current_user.has_voted:
+            flash("You have already voted.", "error")
+            return redirect(url_for('votepage'))
+
+        boy_votes = [request.form.get(f"boy{i}") for i in range(1, 4)]
+        girl_votes = [request.form.get(f"girl{i}") for i in range(1, 4)]
+
+        # Check if all fields are filled
+        if "" in boy_votes or "" in girl_votes:
+            flash("All selections must be filled.", "error")
+            return redirect(url_for('votepage'))
+
+        # Check for duplicate votes
+        if len(set(boy_votes)) < 3 or len(set(girl_votes)) < 3:
+            flash("You cannot vote for the same person more than once.", "error")
+            return redirect(url_for('votepage'))  # <-- THIS WAS MISSING
+
+        # Save vote
+        vote = Vote(
+            user_id=current_user.id,
+            boy_votes=",".join(boy_votes),
+            girl_votes=",".join(girl_votes)
+        )
+        db.session.add(vote)
+        current_user.has_voted = True
+        db.session.commit()
+
+        flash("Your vote has been submitted successfully.", "success")
+        return redirect(url_for('home'))
 
     @app.route('/logout')
     @login_required
     def logout():
         logout_user()
-        flash('Logged out successfully.')
+        flash('Logged out successfully.', 'info')
         return redirect(url_for('login'))

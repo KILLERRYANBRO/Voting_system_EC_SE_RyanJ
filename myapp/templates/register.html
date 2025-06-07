@@ -1,17 +1,10 @@
-<!doctype html>
-<html>
-<head>
-  <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
-  <title>Register</title>
-</head>
-<h1>Prefect Voting System</h1>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <h1>Prefect Voting System</h1>
   <h2>Register</h2>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>{% for message in messages %}<li>{{ message }}</li>{% endfor %}</ul>
-    {% endif %}
-  {% endwith %}
   <form method="POST">
     <input type="text" name="email" placeholder="Email"><br>    
     <input type="text" name="username" placeholder="Username"><br>
@@ -20,5 +13,5 @@
     <input type="submit" value="Register">
   </form>
   <a href="{{url_for('login')}}">Login Here</a>
-</body>
-</html>
+{% endblock %}
+
