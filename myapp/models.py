@@ -18,4 +18,14 @@ class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     boy_votes = db.Column(db.String(100))
-    girl_votes = db.Column(db.String(100)) 
+    girl_votes = db.Column(db.String(100))
+
+class Candidate(db.Model):
+    id          = db.Column(db.Integer, primary_key=True)
+    name        = db.Column(db.String(100), nullable=False)
+    gender      = db.Column(db.String(10),  nullable=False)
+    bio         = db.Column(db.Text)
+    image_url   = db.Column(db.String(250))
+
+    def __repr__(self):
+        return f'<Candidate {self.name}>' 

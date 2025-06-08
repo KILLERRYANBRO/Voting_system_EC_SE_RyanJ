@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{{ candidate.name }} - Candidate Info{% endblock %}
+{% block content %}
+  <h1>{{ candidate.name }}</h1>
+  {% if candidate.image_url %}
+    <img src="{{ candidate.image_url }}" alt="{{ candidate.name }}" style="max-width:200px">
+  {% endif %}
+  {% if candidate.bio %}
+    <p>{{ candidate.bio }}</p>
+  {% else %}
+    <p>No biography provided yet.</p>
+  {% endif %}
+{% endblock %}

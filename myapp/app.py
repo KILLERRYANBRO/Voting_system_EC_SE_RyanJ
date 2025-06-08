@@ -9,11 +9,10 @@ app.secret_key = 'your_secret_key'
 login_manager.login_view = 'login'
 
 def init_routes(app):
-    from .models import User
+    from .models import User, Vote, Candidate
 
     @login_manager.user_loader
     def load_user(user_id):
-        # Flask-Login uses this to reload user from session
         return User.query.get(int(user_id))
 
     @app.route('/')
@@ -28,7 +27,6 @@ def init_routes(app):
             username = request.form['username']
             password = request.form['password']
 
-            # Query the database for the user
             user = User.query.filter_by(username=username).first()
 
             if user and user.check_password(password):
@@ -62,14 +60,24 @@ def init_routes(app):
     @login_required
     def home():
         return render_template('home.html', username=current_user.username)
-        
+
+    @app.context_processor
+    def inject_candidates():
+        return dict(candidates=Candidate.query.order_by(Candidate.name).all())
+
+    @app.route('/candidate/<int:candidate_id>')
+    @login_required
+    def candidate(candidate_id):
+        candidate = Candidate.query.get_or_404(candidate_id)
+        return render_template('candidate.html', candidate=candidate)
+
 
     @app.route('/vote')
     @login_required
     def votepage():
-        return render_template('vote.html')
-    
-    from .models import Vote
+        boys  = Candidate.query.filter_by(gender='boy').all()
+        girls = Candidate.query.filter_by(gender='girl').all()
+        return render_template('vote.html', boys=boys, girls=girls)
 
     @app.route('/submit_vote', methods=['POST'])
     @login_required
@@ -81,7 +89,6 @@ def init_routes(app):
         boy_votes = [request.form.get(f"boy{i}") for i in range(1, 4)]
         girl_votes = [request.form.get(f"girl{i}") for i in range(1, 4)]
 
-        # Check if all fields are filled
         if "" in boy_votes or "" in girl_votes:
             flash("All selections must be filled.", "error")
             return redirect(url_for('votepage'))
@@ -89,9 +96,8 @@ def init_routes(app):
         # Check for duplicate votes
         if len(set(boy_votes)) < 3 or len(set(girl_votes)) < 3:
             flash("You cannot vote for the same person more than once.", "error")
-            return redirect(url_for('votepage'))  # <-- THIS WAS MISSING
+            return redirect(url_for('votepage'))
 
-        # Save vote
         vote = Vote(
             user_id=current_user.id,
             boy_votes=",".join(boy_votes),
