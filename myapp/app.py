@@ -46,13 +46,13 @@ def init_routes(app):
 
             new_user = User(username=username, email=email)
             new_user.set_password(password)
-
             try:
                 db.session.add(new_user)
                 db.session.commit()
                 flash('Registered successfully! You can now log in.', 'success')
                 return redirect(url_for('login'))
             except IntegrityError:
+                db.session.rollback()
                 flash('Username or email already exists.', 'error')
         return render_template('register.html')
 
@@ -114,5 +114,5 @@ def init_routes(app):
     @login_required
     def logout():
         logout_user()
-        flash('Logged out successfully.', 'info')
+        flash('Logged out successfully.')
         return redirect(url_for('login'))

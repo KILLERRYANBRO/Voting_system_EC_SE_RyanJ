@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang = >
+<html lang = en >
 <head>
-  <metacharset>
+  <meta name="viewport">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <title>{% block title %}Prefect Voting System{% endblock %}</title>
 </head>
@@ -9,12 +9,18 @@
   <ul>
     <li><a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
     <li>
-      <a href="#" class="{% if request.endpoint == 'candidates' or request.endpoint == 'candidate' %}active{% endif %}">Candidates</a>
-      <ul class="dropdown">
-        {% for c in candidates %}
-          <li><a href="{{ url_for('candidate', candidate_id=c.id) }}" class="{% if request.endpoint == 'candidate' and request.view_args.candidate_id == c.id %}active{% endif %}">{{ c.name }}</a></li>
-        {% endfor %}
-      </ul>
+      {% set current_page = request.endpoint %}
+      <a href="#" class="border" class="{% if current_page == 'candidates' or current_page == 'candidate' %}active{% endif %}">Candidates <img class="arrow" src='{{url_for("static", filename="images/DropdownArrow.png")}}' alt="DropdownArrow" style="width: 25px;"></a>
+        <ul class="dropdown">
+          {% for c in candidates %}
+            <li>
+              <a href="{{ url_for('candidate', candidate_id=c.id) }}"
+                class="{% if current_page == 'candidate' and request.view_args.candidate_id == c.id %}active{% endif %}">
+                {{ c.name }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
     </li>
     <li><a href="{{ url_for('votepage') }}" class="{% if request.endpoint == 'votepage' %}active{% endif %}">Vote Now</a></li>
   </ul>
