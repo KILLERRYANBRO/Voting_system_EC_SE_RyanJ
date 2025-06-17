@@ -5,5 +5,23 @@
 {% block content %}
   <h1>Welcome, {{ username }}!</h1>
   <a href="{{ url_for('logout') }}">Logout</a>
-{% endblock %}
 
+  <!-- Chart container -->
+  <div style="width: 80%; margin: auto; padding: 20px;">
+    <canvas id="voteChart" height="100"></canvas>
+  </div>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Pass data to JS -->
+  <script>
+    window.chartData = {
+      names: {{ names|tojson }},
+      votes: {{ votes|tojson }}
+    };
+  </script>
+
+  <!-- Your custom JS file -->
+  <script src="{{ url_for('static', filename='chart.js') }}"></script>
+{% endblock %}
