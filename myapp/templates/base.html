@@ -12,14 +12,30 @@
       {% set current_page = request.endpoint %}
       <a href="#" class="border" class="{% if current_page == 'candidates' or current_page == 'candidate' %}active{% endif %}">Candidates <img class="arrow" src='{{url_for("static", filename="images/DropdownArrow.png")}}' alt="DropdownArrow" style="width: 25px;"></a>
         <ul class="dropdown">
-          {% for c in candidates %}
-            <li>
-              <a href="{{ url_for('candidate', candidate_id=c.id) }}"
-                class="{% if current_page == 'candidate' and request.view_args.candidate_id == c.id %}active{% endif %}">
-                {{ c.name }}
-              </a>
-            </li>
-          {% endfor %}
+          <div class="dropdown-columns">
+            <div class="dropdown-column">
+              <strong style="color: #00EBCF; padding: 5px;">Boys</strong>
+              {% for c in boys %}
+                <li>
+                  <a href="{{ url_for('candidate', candidate_id=c.id) }}"
+                    class="{% if current_page == 'candidate' and request.view_args.candidate_id == c.id %}active{% endif %}">
+                    {{ c.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </div>
+            <div class="dropdown-column">
+              <strong style="color: #ff91cc; padding: 5px;">Girls</strong>
+              {% for c in girls %}
+                <li>
+                  <a href="{{ url_for('candidate', candidate_id=c.id) }}"
+                    class="{% if current_page == 'candidate' and request.view_args.candidate_id == c.id %}active{% endif %}">
+                    {{ c.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </div>
+          </div>
         </ul>
     </li>
     <li><a href="{{ url_for('votepage') }}" class="{% if request.endpoint == 'votepage' %}active{% endif %}">Vote Now</a></li>

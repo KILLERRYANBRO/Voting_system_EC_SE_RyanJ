@@ -63,7 +63,9 @@ def init_routes(app):
 
     @app.context_processor
     def inject_candidates():
-        return dict(candidates=Candidate.query.order_by(Candidate.name).all())
+        boys = Candidate.query.filter_by(gender='boy').order_by(Candidate.name).all()
+        girls = Candidate.query.filter_by(gender='girl').order_by(Candidate.name).all()
+        return dict(boys=boys, girls=girls)
 
     @app.route('/candidate/<int:candidate_id>')
     @login_required
