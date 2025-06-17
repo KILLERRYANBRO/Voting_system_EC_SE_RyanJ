@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from sqlalchemy.exc import IntegrityError
 from .extensions import db, login_manager
+import random
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -59,18 +60,35 @@ def init_routes(app):
     from collections import Counter
 
     @app.route('/home')
+    @login_required
     def home():
         candidates = Candidate.query.all()
-        votes_data = VoteSelection.query.with_entities(VoteSelection.candidate_id).all() 
-
+        votes_data = VoteSelection.query.with_entities(VoteSelection.candidate_id).all()
         vote_counter = Counter([v[0] for v in votes_data])
 
-        names = [c.name for c in candidates]
-        vote_counts = [vote_counter.get(c.id, 0) for c in candidates]
+        # Separate and sort boys and girls by vote count
+        boy_candidates = [c for c in candidates if c.gender == 'boy']
+        girl_candidates = [c for c in candidates if c.gender == 'girl']
 
-        return render_template('home.html', names=names, votes=vote_counts)
+        sorted_boys = sorted(boy_candidates, key=lambda c: vote_counter.get(c.id, 0), reverse=True)
+        sorted_girls = sorted(girl_candidates, key=lambda c: vote_counter.get(c.id, 0), reverse=True)
 
+        boy_names = [c.name for c in sorted_boys]
+        boy_votes = [vote_counter.get(c.id, 0) for c in sorted_boys]
 
+        girl_names = [c.name for c in sorted_girls]
+        girl_votes = [vote_counter.get(c.id, 0) for c in sorted_girls]
+
+        random_profiles = random.sample(candidates, min(6, len(candidates)))
+
+        return render_template('home.html', 
+            username=current_user.username,
+            boy_names=boy_names, 
+            boy_votes=boy_votes,
+            girl_names=girl_names, 
+            girl_votes=girl_votes,
+            random_profiles=random_profiles,
+        )
 
     @app.context_processor
     def inject_candidates():
@@ -90,7 +108,11 @@ def init_routes(app):
     def votepage():
         boys  = Candidate.query.filter_by(gender='boy').all()
         girls = Candidate.query.filter_by(gender='girl').all()
-        return render_template('vote.html', boys=boys, girls=girls)
+
+        boy_dicts = [b.to_dict() for b in boys]
+        girl_dicts = [g.to_dict() for g in girls]
+
+        return render_template('vote.html', boys=boys, girls=girls, boy_dicts=boy_dicts, girl_dicts=girl_dicts)
 
     @app.route('/submit_vote', methods=['POST'])
     @login_required

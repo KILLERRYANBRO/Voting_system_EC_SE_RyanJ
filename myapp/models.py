@@ -28,6 +28,15 @@ class Candidate(db.Model):
 
     def __repr__(self):
         return f'<Candidate {self.name}>' 
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'gender': self.gender,
+            'bio': self.bio,
+            'image_url': self.image_url
+        }
 
 class VoteSelection(db.Model):
     id = db.Column(db.Integer, primary_key=True)

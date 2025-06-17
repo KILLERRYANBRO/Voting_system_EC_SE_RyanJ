@@ -6,10 +6,51 @@
   <h1>Welcome, {{ username }}!</h1>
   <a href="{{ url_for('logout') }}">Logout</a>
 
-  <!-- Chart container -->
-  <div style="width: 80%; margin: auto; padding: 20px;">
-    <canvas id="voteChart" height="100"></canvas>
+  <div class="home-layout">
+    <!-- Left cards -->
+    <div class="profile-side">
+      {% for candidate in random_profiles[0:3] %}
+        <div class="profile-card">
+          {% if candidate.image_url %}
+            <img src="{{ url_for('static', filename=candidate.image_url) }}" alt="{{ candidate.name }}" style="max-width:400px; max-height:400px;">
+          {% endif %}
+          <h3>{{ candidate.name }}</h3>
+          <p>{{ candidate.bio }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Chart in the center -->
+    <div class="chart-container">
+      <h2 class="chart-heading">Vote Results</h2>
+      <div class="toggle-buttons">
+        <button onclick="showChart('boy')" class="toggle-btn">Show Boys</button>
+        <button onclick="showChart('girl')" class="toggle-btn">Show Girls</button>
+      </div>
+
+      <div id="boyChartContainer">
+        <canvas id="boyChart"></canvas>
+      </div>
+
+      <div id="girlChartContainer" style="display: none;">
+        <canvas id="girlChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Right cards -->
+    <div class="profile-side">
+      {% for candidate in random_profiles[3:] %}
+        <div class="profile-card">
+          {% if candidate.image_url %}
+            <img src="{{ url_for('static', filename=candidate.image_url) }}" alt="{{ candidate.name }}" style="max-width:400px; max-height:400px;">
+          {% endif %}
+          <h3>{{ candidate.name }}</h3>
+          <p>{{ candidate.bio }}</p>
+        </div>
+      {% endfor %}
+    </div>
   </div>
+
 
   <!-- Chart.js Library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -17,10 +58,17 @@
   <!-- Pass data to JS -->
   <script>
     window.chartData = {
-      names: {{ names|tojson }},
-      votes: {{ votes|tojson }}
+      boys: {
+        names: {{ boy_names | tojson }},
+        votes: {{ boy_votes | tojson }}
+      },
+      girls: {
+        names: {{ girl_names | tojson }},
+        votes: {{ girl_votes | tojson }}
+      }
     };
   </script>
+
 
   <!-- Your custom JS file -->
   <script src="{{ url_for('static', filename='chart.js') }}"></script>

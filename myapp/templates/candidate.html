@@ -3,7 +3,7 @@
 {% block content %}
   <h1>{{ candidate.name }}</h1>
   {% if candidate.image_url %}
-    <img src="{{ candidate.image_url }}" alt="{{ candidate.name }}" style="max-width:200px">
+    <img src="{{ url_for('static', filename=candidate.image_url) }}" alt="{{ candidate.name }}" style="max-width:400px; max-height:400px;">
   {% endif %}
   {% if candidate.bio %}
     <p>{{ candidate.bio }}</p>
