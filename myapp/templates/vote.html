@@ -10,48 +10,54 @@
   window.girlsData = {{ girl_dicts | tojson }};
 </script>
 
-<div class="main-layout">
-  <!-- Left: the form -->
-  <form method="POST" action="{{ url_for('submit_vote') }}" class="vote-form-wrapper">
-    <!-- Boy voting section -->
-    <div class="vote-form vote-form-boy">
-      <div class="vote-section">
-        <h2>Boys</h2>
-        {% for i in range(1, 3+1) %}
-          <select class="form-select boy-select" name="boy{{ i }}" required>
-            <option value="">Boy Vote {{ i }}</option>
-            {% for b in boys %}
-              <option value="{{ b.id }}">{{ b.name }}</option>
-            {% endfor %}
-          </select>
-        {% endfor %}
-      </div>
-    </div>
-
-    <!-- Girl voting section -->
-    <div class="vote-form vote-form-girl">
-      <div class="vote-section">
-        <h2>Girls</h2>
-        {% for i in range(1, 3+1) %}
-          <select class="form-select girl-select" name="girl{{ i }}" required>
-            <option value="">Girl Vote {{ i }}</option>
-            {% for g in girls %}
-              <option value="{{ g.id }}">{{ g.name }}</option>
-            {% endfor %}
-          </select>
-        {% endfor %}
-      </div>
-    </div>
-
-    <!-- Submit button inside the form -->
-    <div style="margin-top: 20px; text-align: center; width: 100%;">
-      <input type="submit" value="Submit Vote">
-    </div>
-  </form>
-
-  <!-- Right: Live preview -->
-  <div class="preview-container">
+<!-- Three-column layout: left preview, center form, right preview -->
+<div class="triple-layout">
+  <!-- Left Column: Boys Preview -->
+  <div class="preview-container left-preview">
+    <h2>Boys Selected</h2>
     <div id="left-cards" class="preview-column"></div>
+  </div>
+  <!-- Center Column: Voting Form -->
+  <div class="preview-container center-preview">
+    <div class="vote-form-wrapper">
+      <form method="POST" action="{{ url_for('submit_vote') }}">
+        <div class="vote-columns">
+          <!-- Boys Vote Section -->
+          <div class="vote-section">
+            <h2>Boys</h2>
+            {% for i in range(1, 4) %}
+              <select class="form-select boy-select" name="boy{{ i }}" required>
+                <option value="">Boy Vote {{ i }}</option>
+                {% for b in boys %}
+                  <option value="{{ b.id }}">{{ b.name }}</option>
+                {% endfor %}
+              </select>
+            {% endfor %}
+          </div>
+          <!-- Girls Vote Section -->
+          <div class="vote-section">
+            <h2>Girls</h2>
+            {% for i in range(1, 4) %}
+              <select class="form-select girl-select" name="girl{{ i }}" required>
+                <option value="">Girl Vote {{ i }}</option>
+                {% for g in girls %}
+                  <option value="{{ g.id }}">{{ g.name }}</option>
+                {% endfor %}
+              </select>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <div style="margin-top: 20px; text-align: center; width: 100%;">
+          <input type="submit" value="Submit Vote">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Right Column: Girls Preview -->
+  <div class="preview-container right-preview">
+    <h2>Girls Selected</h2>
     <div id="right-cards" class="preview-column"></div>
   </div>
 </div>

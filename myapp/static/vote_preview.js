@@ -6,10 +6,12 @@ function getCandidateById(list, id) {
 function renderCard(container, candidate) {
   if (!candidate) return;
   const cardHTML = `
-    <div class="candidate-card">
-      <img src="/static/images/${candidate.name}.png" alt="${candidate.name}">
-      <h4>${candidate.name}</h4>
-      <p>${candidate.bio}</p>
+    <div class="preview-card-landscape">
+      <img src="static/${candidate.image_url}" alt="${candidate.name}">
+      <div class="info">
+        <h4>${candidate.name}</h4>
+        <p>${candidate.bio}</p>
+      </div>
     </div>`;
   container.innerHTML += cardHTML;
 }
